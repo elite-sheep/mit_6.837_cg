@@ -42,6 +42,55 @@ const int NUM_OF_COLOR = 4;
 GLfloat lightOffsetX = 0.0;
 GLfloat lightOffsetY = 0.0;
 
+// Start Rotate or not
+bool isRotating = false;
+GLfloat rotateTheta = 0;
+
+int flushInterval = 50;
+
+// The render list
+GLuint renderList;
+
+// Current Color
+GLfloat color[4] = {0.5, 0.5, 0.9, 1.0};
+GLfloat diffColors[4][4] = { {0.5, 0.5, 0.9, 1.0},
+                             {0.9, 0.5, 0.5, 1.0},
+                             {0.5, 0.9, 0.3, 1.0},
+                             {0.3, 0.8, 0.9, 1.0} };
+
+void computeColor()
+{
+	for(int i=0; i<4; i++)
+	{
+		if(color[i] < diffColors[colorIndex][i])
+		{
+			color[i] += 0.01;
+		}
+		else
+		{
+			color[i] -= 0.01;
+		}
+	}
+}
+
+void timeFunc(int t)
+{
+	if(isRotating)
+	{
+#if DEBUG
+		cout << rotateTheta << endl;
+#endif
+		rotateTheta += 1.0;
+		if(rotateTheta > 360.0)
+		{
+			rotateTheta -= 360.0;
+		}
+	}
+	computeColor();
+	glutPostRedisplay();
+	glutTimerFunc(flushInterval, timeFunc, 0);
+}
+
 
 // This function is called whenever a "Normal" key press is received.
 void keyboardFunc( unsigned char key, int x, int y )
@@ -55,6 +104,9 @@ void keyboardFunc( unsigned char key, int x, int y )
         // add code to change color here
 				colorIndex = (colorIndex + 1) % NUM_OF_COLOR;
         break;
+		case 'r':
+				isRotating = !isRotating;
+				break;
     default:
         cout << "Unhandled key press " << key << "." << endl;        
     }
@@ -87,10 +139,13 @@ void specialFunc( int key, int x, int y )
     glutPostRedisplay();
 }
 
-// This function is responsible for displaying the object.
 void drawScene(void)
 {
     int i;
+
+#if DEBUG
+		cout << "Drawing" << endl;
+#endif
 
     // Clear the rendering window
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -108,13 +163,9 @@ void drawScene(void)
     // Set material properties of object
 
 	// Here are some colors you might use - feel free to add more
-    GLfloat diffColors[4][4] = { {0.5, 0.5, 0.9, 1.0},
-                                 {0.9, 0.5, 0.5, 1.0},
-                                 {0.5, 0.9, 0.3, 1.0},
-                                 {0.3, 0.8, 0.9, 1.0} };
     
 	// Here we use the first color entry as the diffuse color
-    glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT_AND_DIFFUSE, diffColors[colorIndex]);
+    glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT_AND_DIFFUSE, color);
 
 	// Define specular color and shininess
     GLfloat specColor[] = {1.0, 1.0, 1.0, 1.0};
@@ -134,9 +185,14 @@ void drawScene(void)
     glLightfv(GL_LIGHT0, GL_DIFFUSE, Lt0diff);
     glLightfv(GL_LIGHT0, GL_POSITION, Lt0pos);
 
-	// This GLUT method draws a teapot.  You should replace
-	// it with code which draws the object you loaded.
-	glutSolidTeapot(1.0);
+		glPushMatrix();
+		if(isRotating)
+		{
+			glRotatef(rotateTheta, 0, 1, 0);
+		}
+		// Call the rendering list here
+		glCallList(renderList);
+		glPopMatrix();
     
     // Dump the image to the screen.
     glutSwapBuffers();
@@ -155,6 +211,11 @@ void initRendering()
 		cout << "Loading faces" << endl;
 #endif
 
+		renderList = glGenLists(1);
+		glNewList(renderList, GL_COMPILE);
+
+	// This GLUT method draws a teapot.  You should replace
+	// it with code which draws the object you loaded.
 		glBegin(GL_TRIANGLES);
 		vector<vector<unsigned> >::iterator it;
 		for(it=vecf.begin(); it!=vecf.end(); ++it)
@@ -166,6 +227,9 @@ void initRendering()
 			glNormal3d(vecn[(*it)[8]-1][0], vecn[(*it)[8]-1][1], vecn[(*it)[8]-1][2]);
 			glVertex3d(vecn[(*it)[2]-1][0], vecn[(*it)[2]-1][1], vecn[(*it)[2]-1][2]);
 		}
+
+		glEnd();
+		glEndList();
 
 #if DEBUG
 		cout << "Face Loaded" << endl;
@@ -213,15 +277,13 @@ void loadInput()
 		{
 			float x, y, z;
 			ss >> x >> y >> z;
-			Vector3f v(x, y, z);
-			vecv.push_back(v);
+			vecv.push_back(Vector3f(x, y, z));
 		}
 		else if(s == "vn")
 		{
 			float x, y, z;
 			ss >> x >> y >> z;
-			Vector3f v(x, y, z);
-			vecn.push_back(v);
+			vecn.push_back(Vector3f(x, y, z));
 		}
 		else if(s == "f")
 		{
@@ -278,6 +340,8 @@ int main( int argc, char** argv )
 
     // Call this whenever window needs redrawing
     glutDisplayFunc( drawScene );
+
+		glutTimerFunc(flushInterval, timeFunc, 0);
 
     // Start the main loop.  glutMainLoop never returns.
     glutMainLoop( );
