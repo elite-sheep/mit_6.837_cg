@@ -46,23 +46,14 @@ Curve evalBezier( const vector< Vector3f >& P, unsigned steps )
     // receive have G1 continuity.  Otherwise, the TNB will not be
     // be defined at points where this does not hold.
 
-    //cerr << "\t>>> evalBezier has been called with the following input:" << endl;
-
-    //cerr << "\t>>> Control points (type vector< Vector3f >): "<< endl;
-    /*for( unsigned i = 0; i < P.size(); ++i )
-    {
-        cerr << "\t>>> " << P[i] << endl;
-    }*/
-
-    //cerr << "\t>>> Steps (type steps): " << steps << endl;
-
 		Curve result = Curve();
 		float delta = 1.0/steps;
 		Matrix4f bernstain = Matrix4f(1,-3,3,-1,
 				0,3,-6,3,
 				0,0,3,-3,
 				0,0,0,1);
-		for (int i=3; i<P.size(); i+=3) {
+		for (unsigned i=3; i<P.size(); i+=3) 
+		{
 			Vector4f x(P[i-3][0], P[i-2][0], P[i-1][0], P[i][0]);
 			Vector4f y(P[i-3][1], P[i-2][1], P[i-1][1], P[i][1]);
 			Vector4f z(P[i-3][2], P[i-2][2], P[i-1][2], P[i][2]);
@@ -75,7 +66,8 @@ Curve evalBezier( const vector< Vector3f >& P, unsigned steps )
 			B.normalize();
 			N.normalize();
 
-			for (unsigned j=0; j<=steps; j++) {
+			for (unsigned j=0; j<=steps; j++) 
+			{
 				float t = delta * j;
 				Vector4f basis = bernstain * Vector4f(1, t, t*t, t*t*t);
 				Vector4f basisNorm = bernstain * Vector4f(0, 1, 2*t, 3*t*t);
@@ -111,19 +103,47 @@ Curve evalBspline( const vector< Vector3f >& P, unsigned steps )
     // basis from B-spline to Bezier.  That way, you can just call
     // your evalBezier function.
 
-    cerr << "\t>>> evalBSpline has been called with the following input:" << endl;
+		Curve result = Curve();
+		float delta = 1.0/steps;
+		Matrix4f bSplineBase = Matrix4f(1,-3,3,-1,
+				4,0,-6,3,
+				1,3,3,-3,
+				0,0,0,1);
+		bSplineBase /= 6.0;
+		for (unsigned i=3; i<P.size(); i++) 
+		{
+			Vector4f x(P[i-3][0], P[i-2][0], P[i-1][0], P[i][0]);
+			Vector4f y(P[i-3][1], P[i-2][1], P[i-1][1], P[i][1]);
+			Vector4f z(P[i-3][2], P[i-2][2], P[i-1][2], P[i][2]);
 
-    cerr << "\t>>> Control points (type vector< Vector3f >): "<< endl;
-    for( unsigned i = 0; i < P.size(); ++i )
-    {
-        cerr << "\t>>> " << P[i] << endl;
-    }
+			Vector3f V = P[i-3];
+			Vector3f T = P[i-2] - P[i-3];
+			Vector3f B(0, 0, 1);
+			Vector3f N = Vector3f::cross(B, T);
+			T.normalize();
+			B.normalize();
+			N.normalize();
 
-    cerr << "\t>>> Steps (type steps): " << steps << endl;
-    cerr << "\t>>> Returning empty curve." << endl;
+			for (unsigned j=0; j<=steps; j++) 
+			{
+				float t = delta * j;
+				Vector4f basis = bSplineBase * Vector4f(1, t, t*t, t*t*t);
+				Vector4f basisNorm = bSplineBase * Vector4f(0, 1, 2*t, 3*t*t);
+				V = Vector3f(Vector4f::dot(basis, x), Vector4f::dot(basis, y), Vector4f::dot(basis, z));
+				T = Vector3f(Vector4f::dot(basisNorm, x), Vector4f::dot(basisNorm, y), Vector4f::dot(basisNorm, z));
+				T.normalize();
+				N = Vector3f::cross(B, T);
+				N.normalize();
+				B = Vector3f::cross(T, N);
+				B.normalize();
+				
+				CurvePoint currentPoint = {V, T, N, B};
+				result.push_back(currentPoint);
+			}
+		}
+		cerr << "\t>>> Returning a curve with " << result.size() << " points" << endl;
 
-    // Return an empty curve right now.
-    return Curve();
+    return result;
 }
 
 Curve evalCircle( float radius, unsigned steps )
