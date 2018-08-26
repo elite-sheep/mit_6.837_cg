@@ -2,11 +2,11 @@ INCFLAGS  = -I /usr/include/GL
 INCFLAGS += -I ./vecmath/include
 
 LINKFLAGS = -lglut -lGL -lGLU
-#LINKFLAGS += -L ./vecmath/ -lvecmath
+#LINKFLAGS += -L ./vecmath/src 
 
 CFLAGS    = -O2 -Wall -ansi -DSOLN
 CC        = g++
-SRCS      = main.cpp parse.cpp curve.cpp surf.cpp camera.cpp
+SRCS      = $(wildcard src/*.cpp)
 SRCS += $(wildcard vecmath/src/*.cpp)
 OBJS      = $(SRCS:.cpp=.o)
 PROG      = a1

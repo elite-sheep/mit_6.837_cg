@@ -4,7 +4,6 @@
 #include <windows.h>
 #endif
 #include <GL/gl.h>
-#include "vecmath/include/vecmath.h"
 using namespace std;
 
 namespace
