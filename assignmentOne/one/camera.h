@@ -6,7 +6,7 @@
 #ifndef CAMERA_H
 #define CAMERA_H
 
-#include <vecmath.h>
+#include "./vecmath/include/vecmath.h"
 
 class Camera
 {
