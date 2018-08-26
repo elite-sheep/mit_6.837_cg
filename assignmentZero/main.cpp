@@ -58,6 +58,7 @@ GLfloat diffColors[4][4] = { {0.5, 0.5, 0.9, 1.0},
                              {0.5, 0.9, 0.3, 1.0},
                              {0.3, 0.8, 0.9, 1.0} };
 
+// Compute the next color of our objects
 void computeColor()
 {
 	for(int i=0; i<4; i++)
@@ -156,13 +157,11 @@ void drawScene(void)
 
     // Position the camera at [0,0,5], looking at [0,0,0],
     // with [0,1,0] as the up direction.
-    gluLookAt(0.0, 0.0, 5.0,
+    gluLookAt(0.0, 0.0, 3.0,
               0.0, 0.0, 0.0,
               0.0, 1.0, 0.0);
 
     // Set material properties of object
-
-	// Here are some colors you might use - feel free to add more
     
 	// Here we use the first color entry as the diffuse color
     glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT_AND_DIFFUSE, color);
