@@ -2,6 +2,8 @@
 #include "extra.h"
 using namespace std;
 
+const float PI = 3.1415926;
+
 namespace
 {
     
@@ -31,7 +33,37 @@ Surface makeSurfRev(const Curve &profile, unsigned steps)
 
     // TODO: Here you should build the surface.  See surf.h for details.
 
-    cerr << "\t>>> makeSurfRev called (but not implemented).\n\t>>> Returning empty surface." << endl;
+    //cerr << "\t>>> makeSurfRev called (but not implemented).\n\t>>> Returning empty surface." << endl;
+		
+		float delta = 2.0 * PI / steps;
+		Matrix3f rotate = Matrix3f(cos(delta), 0, sin(delta),
+				0, 1, 0,
+				-sin(delta), 0, cos(delta));
+
+		Curve current = profile;
+		for (unsigned i = 0; i < steps; i++) {
+			for (unsigned j = 0; j < current.size(); j++) {
+				surface.VV.push_back(current[j].V);
+				surface.VN.push_back(-current[j].N);
+				if (j != current.size() - 1) {
+					surface.VF.push_back(Tup3u(
+								i * current.size() + j,
+								i * current.size() + j + 1,
+								((i + 1) % steps) * current.size() + j));
+				} else {
+					surface.VF.push_back(Tup3u(
+								i * current.size() + j,
+								((i + 1) % steps) * current.size() + j + 1,
+								((i + 1) % steps) * current.size() + j));
+				}
+			}
+
+			// Rotate the curve.
+			for (unsigned k = 0; k < current.size(); k++) {
+				current[k].V = rotate * current[k].V;
+				current[k].N = rotate * current[k].N;
+			}
+		}
  
     return surface;
 }
@@ -48,7 +80,45 @@ Surface makeGenCyl(const Curve &profile, const Curve &sweep )
 
     // TODO: Here you should build the surface.  See surf.h for details.
 
-    cerr << "\t>>> makeGenCyl called (but not implemented).\n\t>>> Returning empty surface." <<endl;
+    //cerr << "\t>>> makeGenCyl called (but not implemented).\n\t>>> Returning empty surface." <<endl;
+		
+		unsigned steps = sweep.size();
+		Matrix4f M, inverse;
+		Curve current = profile;
+
+		for (unsigned i = 0; i < steps; i++) {
+			M = Matrix4f(Vector4f(sweep[i].N, 0),
+					Vector4f(sweep[i].B, 0),
+					Vector4f(sweep[i].T, 0),
+					Vector4f(sweep[i].N, 1));
+
+			inverse = M.inverse();
+			inverse.transpose();
+
+			for (unsigned j = 0; j < current.size(); j++) {
+				surface.VV.push_back(current[j].V);
+				surface.VN.push_back(-current[j].N);
+				if (j != current.size() - 1) {
+					surface.VF.push_back(Tup3u(
+								i * current.size() + j,
+								i * current.size() + j + 1,
+								((i + 1) % steps) * current.size() + j));
+				} else {
+					surface.VF.push_back(Tup3u(
+								i * current.size() + j,
+								((i + 1) % steps) * current.size() + j + 1,
+								((i + 1) % steps) * current.size() + j));
+				}
+			}
+
+			for (unsigned j = 0; j < current.size(); j++) {
+				Vector4f tempV, tempN;
+				tempV = M * Vector4f(profile[j].V, 1.0f);
+				tempN = inverse * Vector4f(profile[j].N, 1.0f);
+				current[j].V = Vector3f(tempV[0], tempV[1], tempV[2]);
+				current[j].N = Vector3f(tempN[0], tempN[1], tempN[2]);
+			}
+		}
 
     return surface;
 }
