@@ -19,6 +19,17 @@ namespace
     
 }
     
+Curve evalCatmullRom( const vector< Vector3f >& P, unsigned steps, float tension)
+{
+	if (P.size() < 4) {
+		cerr << "evalCatmullRom must be called with at least 4 control points." << endl;
+		exit(0);
+	}
+
+	Curve result = Curve();
+
+	return result;
+}
 
 Curve evalBezier( const vector< Vector3f >& P, unsigned steps )
 {
