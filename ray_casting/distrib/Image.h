@@ -59,8 +59,8 @@ public:
 
     static Image* LoadTGA( const char* filename );
     void SaveTGA( const char* filename ) const; 
-	int SaveBMP(const char *filename);
-	void SaveImage(const char *filename);
+    int SaveBMP(const char *filename);
+    void SaveImage(const char *filename);
     // extension for image comparison
     static Image* compare( Image* img1, Image* img2 );
 
