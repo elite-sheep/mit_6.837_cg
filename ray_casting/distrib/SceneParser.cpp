@@ -6,6 +6,7 @@
 
 #include "SceneParser.h"
 #include "Camera.h" 
+#include "PerspectiveCamera.h"
 #include "Light.h"
 #include "Material.h"
 

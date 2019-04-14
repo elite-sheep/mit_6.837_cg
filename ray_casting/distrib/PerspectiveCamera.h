@@ -18,19 +18,16 @@ using namespace std;
 class PerspectiveCamera: public Camera
 {
 public:
-	PerspectiveCamera(const Vector3f& center, const Vector3f& direction,const Vector3f& up , float angle){
+  PerspectiveCamera(const Vector3f& center, const Vector3f& direction,const Vector3f& up , float angle);
 
-	}
-
-	virtual Ray generateRay( const Vector2f& point){
-		
-	}
-
-	virtual float getTMin() const { 
-		return 0.0f;
-	}
+  virtual Ray generateRay( const Vector2f& point) override;
+  virtual float getTMin() const override;
 
 private:
+  Vector3f center_;
+  Vector3f direction_;
+  Vector3f up_;
+  Vector3f horizontal_;
   float angle_;
 
 };
