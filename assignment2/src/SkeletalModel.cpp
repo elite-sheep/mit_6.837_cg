@@ -60,10 +60,12 @@ void SkeletalModel::loadSkeleton( const char* filename )
       // The id if root node is -1, we will not explicitly construct
       // such a node here.
       if (parent_id >= 0 && m_joints.size() > parent_id) {
-        std::cout << "hahaha" << std::endl;
         m_joints[parent_id]->children.push_back(joint);
       } else if(parent_id >= 0){
         std::cerr << "SkeletalModel: Unable to find parent." << std::endl;
+      } else {
+        // The parent_id of root joint should be -1.
+        m_rootJoint = joint;
       }
     }
 
@@ -71,6 +73,23 @@ void SkeletalModel::loadSkeleton( const char* filename )
   } else {
     std::cerr << "SkeletalModel: Unable to open the file " << filename << std::endl;
   }
+}
+
+void SkeletalModel::drawJoint(const Joint* joint) {
+  if (joint == nullptr) {
+    std::cerr << "SkeletalModel: draw joint failed.";
+  }
+
+  m_matrixStack.push(joint->transform);
+  glLoadMatrixf(m_matrixStack.top());
+  glutSolidSphere(0.025f, 12, 12);
+
+  // Draw children of joint recursively.
+  for (auto it = joint->children.begin(); it != joint->children.end(); ++it) {
+    Joint* child = *it;
+    drawJoint(child);
+  }
+  m_matrixStack.pop();
 }
 
 void SkeletalModel::drawJoints( )
@@ -84,11 +103,53 @@ void SkeletalModel::drawJoints( )
 	// (glPushMatrix, glPopMatrix, glMultMatrix).
 	// You should use your MatrixStack class
 	// and use glLoadMatrix() before your drawing call.
+
+  drawJoint(m_rootJoint);
 }
 
 void SkeletalModel::drawSkeleton( )
 {
 	// Draw boxes between the joints. You will need to add a recursive helper function to traverse the joint hierarchy.
+  drawSkeleton(nullptr, m_rootJoint);
+}
+
+void SkeletalModel::drawSkeleton(const Joint* parent, const Joint* current) {
+  if (current == nullptr) {
+    std::cerr << "SkeletalModel: No current joint is given.";
+    return;
+  }
+
+  if (parent) {
+    Matrix4f m = m_matrixStack.top();
+    Vector3f v(0.0, 0.0, 0.0);
+    Vector4f p(0.0, 0.0, 0.0, 1.0);
+    p = current->transform * p;
+    v = p.xyz();
+    Matrix4f scale = Matrix4f::scaling(50 * v.abs(), 1.0f, 1.0f);
+    Vector3f xaxis(1.0f, 0.0f, 0.0f);
+    Vector3f up = Vector3f::cross(xaxis, v);
+    up.normalize();
+
+    float theta = acos(Vector3f::dot(v, xaxis)/v.abs());
+    Matrix4f rotate = Matrix4f::rotation(up, theta);
+    Matrix4f translation = Matrix4f::translation(0.5 * v);
+
+    m = m * translation;
+    m = m * rotate;
+    m = m * scale;
+
+    glLoadMatrixf(m);
+    glutSolidCube(1.0);
+  }
+
+  m_matrixStack.push(current->transform);
+  for (auto it = current->children.begin(); it != current->children.end(); ++it) {
+    Joint* child = *it;
+    drawSkeleton(current, child);
+  }
+  m_matrixStack.pop();
+
+  return;
 }
 
 void SkeletalModel::setJointTransform(int jointIndex, float rX, float rY, float rZ)

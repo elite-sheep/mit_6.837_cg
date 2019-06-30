@@ -81,6 +81,10 @@ private:
 	Mesh m_mesh;
 
 	MatrixStack m_matrixStack;
+
+private:
+  void drawJoint(const Joint*);
+  void drawSkeleton(const Joint*, const Joint*);
 };
 
 #endif
