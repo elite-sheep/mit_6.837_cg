@@ -33,7 +33,7 @@ void MatrixStack::push( const Matrix4f& m )
 	// the new top should be the old top multiplied by m
 
   Matrix4f currentStateMatrix = top();
-  m_matrices.push_back(m * currentStateMatrix);
+  m_matrices.push_back(currentStateMatrix * m);
 }
 
 void MatrixStack::pop()

@@ -139,7 +139,7 @@ void SkeletalModel::drawSkeleton(const Joint* parent, const Joint* current) {
     m = m * scale;
 
     glLoadMatrixf(m);
-    glutSolidCube(1.0);
+    glutSolidCube(.020);
   }
 
   m_matrixStack.push(current->transform);
