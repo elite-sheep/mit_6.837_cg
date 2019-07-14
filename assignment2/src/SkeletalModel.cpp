@@ -139,7 +139,7 @@ void SkeletalModel::drawSkeleton(const Joint* parent, const Joint* current) {
     m = m * scale;
 
     glLoadMatrixf(m);
-    glutSolidCube(.020);
+    glutSolidCube(.030);
   }
 
   m_matrixStack.push(current->transform);
@@ -168,6 +168,20 @@ void SkeletalModel::computeBindWorldToJointTransforms()
 	//
 	// This method should update each joint's bindWorldToJointTransform.
 	// You will need to add a recursive helper function to traverse the joint hierarchy.
+
+  m_matrixStack.clear();
+  computeBindWorldToJointTransformsForSingleVertex(m_rootJoint);
+}
+
+void SkeletalModel::computeBindWorldToJointTransformsForSingleVertex(Joint* current_joint) {
+  m_matrixStack.push(current_joint->transform);
+  current_joint->bindWorldToJointTransform = m_matrixStack.top();
+
+  for (auto it=current_joint->children.begin(); it != current_joint->children.end(); ++it) {
+    computeBindWorldToJointTransformsForSingleVertex(*it);
+  }
+
+  m_matrixStack.pop();
 }
 
 void SkeletalModel::updateCurrentJointToWorldTransforms()
@@ -180,6 +194,20 @@ void SkeletalModel::updateCurrentJointToWorldTransforms()
 	//
 	// This method should update each joint's bindWorldToJointTransform.
 	// You will need to add a recursive helper function to traverse the joint hierarchy.
+
+  m_matrixStack.clear();
+  updateCurrentJointToWorldTransformsForSingleVertex(m_rootJoint);
+}
+
+void SkeletalModel::updateCurrentJointToWorldTransformsForSingleVertex(Joint* current_joint) {
+  m_matrixStack.push(current_joint->transform.inverse());
+  current_joint->currentJointToWorldTransform = m_matrixStack.top();
+
+  for (auto it=current_joint->children.begin(); it != current_joint->children.end(); ++it) {
+    updateCurrentJointToWorldTransformsForSingleVertex(*it);
+  }
+
+  m_matrixStack.pop();
 }
 
 void SkeletalModel::updateMesh()
@@ -189,5 +217,20 @@ void SkeletalModel::updateMesh()
 	// given the current state of the skeleton.
 	// You will need both the bind pose world --> joint transforms.
 	// and the current joint --> world transforms.
+  
+  for (int i = 0; i < m_mesh.bindVertices.size(); ++i) {
+    Matrix4f transform_matrix = Matrix4f(0.0f);
+    for (int j = 0; j < m_joints.size(); ++j) {
+      Matrix4f attachment_scaling_matrix = Matrix4f::scaling(m_mesh.attachments[i][j], m_mesh.attachments[i][j], m_mesh.attachments[i][j]);
+      Matrix4f current_transform_matrix = attachment_scaling_matrix * m_joints[j]->currentJointToWorldTransform * m_joints[j]->bindWorldToJointTransform;
+
+      transform_matrix.setCol(0, transform_matrix.getCol(0) + current_transform_matrix.getCol(0));
+      transform_matrix.setCol(1, transform_matrix.getCol(1) + current_transform_matrix.getCol(1));
+      transform_matrix.setCol(2, transform_matrix.getCol(2) + current_transform_matrix.getCol(2));
+      transform_matrix.setCol(3, transform_matrix.getCol(3) + current_transform_matrix.getCol(3));
+    }
+    Vector4f current_vertex = Vector4f(m_mesh.bindVertices[i], 1.0f);
+    m_mesh.currentVertices[i] = (transform_matrix * current_vertex).xyz();
+  }
 }
 

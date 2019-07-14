@@ -85,6 +85,8 @@ private:
 private:
   void drawJoint(const Joint*);
   void drawSkeleton(const Joint*, const Joint*);
+  void computeBindWorldToJointTransformsForSingleVertex(Joint*);
+  void updateCurrentJointToWorldTransformsForSingleVertex(Joint*);
 };
 
 #endif
