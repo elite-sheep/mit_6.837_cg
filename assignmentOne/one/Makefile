@@ -1,5 +1,5 @@
 INCFLAGS  = -I ../../GL/
-INCFLAGS += -I ./vecmath/include
+INCFLAGS += -I ../../vecmath/include
 
 LINKFLAGS = -lglut -lGL -lGLU
 #LINKFLAGS += -L ./vecmath/src 
@@ -7,7 +7,7 @@ LINKFLAGS = -lglut -lGL -lGLU
 CFLAGS    = -O2 -Wall -ansi -DSOLN
 CC        = g++
 SRCS      = $(wildcard src/*.cpp)
-SRCS += $(wildcard vecmath/src/*.cpp)
+SRCS += $(wildcard ../../vecmath/src/*.cpp)
 OBJS      = $(SRCS:.cpp=.o)
 PROG      = a1
 
