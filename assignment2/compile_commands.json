@@ -1,0 +1,325 @@
+[
+    {
+        "arguments": [
+            "g++", 
+            "-c", 
+            "-g", 
+            "-DSOLN", 
+            "-I", 
+            "./GL", 
+            "-I", 
+            "./vecmath/include", 
+            "-I", 
+            "./", 
+            "-o", 
+            "vecmath/src/Matrix2f.o", 
+            "vecmath/src/Matrix2f.cpp"
+        ], 
+        "directory": "/home/yucwang/Documents/development/mit_6.837_cg/assignment2", 
+        "file": "vecmath/src/Matrix2f.cpp"
+    }, 
+    {
+        "arguments": [
+            "g++", 
+            "-c", 
+            "-g", 
+            "-DSOLN", 
+            "-I", 
+            "./GL", 
+            "-I", 
+            "./vecmath/include", 
+            "-I", 
+            "./", 
+            "-o", 
+            "src/modelerapp.o", 
+            "src/modelerapp.cpp"
+        ], 
+        "directory": "/home/yucwang/Documents/development/mit_6.837_cg/assignment2", 
+        "file": "src/modelerapp.cpp"
+    }, 
+    {
+        "arguments": [
+            "g++", 
+            "-c", 
+            "-g", 
+            "-DSOLN", 
+            "-I", 
+            "./GL", 
+            "-I", 
+            "./vecmath/include", 
+            "-I", 
+            "./", 
+            "-o", 
+            "src/bitmap.o", 
+            "src/bitmap.cpp"
+        ], 
+        "directory": "/home/yucwang/Documents/development/mit_6.837_cg/assignment2", 
+        "file": "src/bitmap.cpp"
+    }, 
+    {
+        "arguments": [
+            "g++", 
+            "-c", 
+            "-g", 
+            "-DSOLN", 
+            "-I", 
+            "./GL", 
+            "-I", 
+            "./vecmath/include", 
+            "-I", 
+            "./", 
+            "-o", 
+            "src/camera.o", 
+            "src/camera.cpp"
+        ], 
+        "directory": "/home/yucwang/Documents/development/mit_6.837_cg/assignment2", 
+        "file": "src/camera.cpp"
+    }, 
+    {
+        "arguments": [
+            "g++", 
+            "-c", 
+            "-g", 
+            "-DSOLN", 
+            "-I", 
+            "./GL", 
+            "-I", 
+            "./vecmath/include", 
+            "-I", 
+            "./", 
+            "-o", 
+            "src/ModelerView.o", 
+            "src/ModelerView.cpp"
+        ], 
+        "directory": "/home/yucwang/Documents/development/mit_6.837_cg/assignment2", 
+        "file": "src/ModelerView.cpp"
+    }, 
+    {
+        "arguments": [
+            "g++", 
+            "-c", 
+            "-g", 
+            "-DSOLN", 
+            "-I", 
+            "./GL", 
+            "-I", 
+            "./vecmath/include", 
+            "-I", 
+            "./", 
+            "-o", 
+            "src/main.o", 
+            "src/main.cpp"
+        ], 
+        "directory": "/home/yucwang/Documents/development/mit_6.837_cg/assignment2", 
+        "file": "src/main.cpp"
+    }, 
+    {
+        "arguments": [
+            "g++", 
+            "-c", 
+            "-g", 
+            "-DSOLN", 
+            "-I", 
+            "./GL", 
+            "-I", 
+            "./vecmath/include", 
+            "-I", 
+            "./", 
+            "-o", 
+            "vecmath/src/Vector3f.o", 
+            "vecmath/src/Vector3f.cpp"
+        ], 
+        "directory": "/home/yucwang/Documents/development/mit_6.837_cg/assignment2", 
+        "file": "vecmath/src/Vector3f.cpp"
+    }, 
+    {
+        "arguments": [
+            "g++", 
+            "-c", 
+            "-g", 
+            "-DSOLN", 
+            "-I", 
+            "./GL", 
+            "-I", 
+            "./vecmath/include", 
+            "-I", 
+            "./", 
+            "-o", 
+            "src/modelerui.o", 
+            "src/modelerui.cpp"
+        ], 
+        "directory": "/home/yucwang/Documents/development/mit_6.837_cg/assignment2", 
+        "file": "src/modelerui.cpp"
+    }, 
+    {
+        "arguments": [
+            "g++", 
+            "-c", 
+            "-g", 
+            "-DSOLN", 
+            "-I", 
+            "./GL", 
+            "-I", 
+            "./vecmath/include", 
+            "-I", 
+            "./", 
+            "-o", 
+            "src/SkeletalModel.o", 
+            "src/SkeletalModel.cpp"
+        ], 
+        "directory": "/home/yucwang/Documents/development/mit_6.837_cg/assignment2", 
+        "file": "src/SkeletalModel.cpp"
+    }, 
+    {
+        "arguments": [
+            "g++", 
+            "-c", 
+            "-g", 
+            "-DSOLN", 
+            "-I", 
+            "./GL", 
+            "-I", 
+            "./vecmath/include", 
+            "-I", 
+            "./", 
+            "-o", 
+            "vecmath/src/Vector4f.o", 
+            "vecmath/src/Vector4f.cpp"
+        ], 
+        "directory": "/home/yucwang/Documents/development/mit_6.837_cg/assignment2", 
+        "file": "vecmath/src/Vector4f.cpp"
+    }, 
+    {
+        "arguments": [
+            "g++", 
+            "-c", 
+            "-g", 
+            "-DSOLN", 
+            "-I", 
+            "./GL", 
+            "-I", 
+            "./vecmath/include", 
+            "-I", 
+            "./", 
+            "-o", 
+            "vecmath/src/Vector2f.o", 
+            "vecmath/src/Vector2f.cpp"
+        ], 
+        "directory": "/home/yucwang/Documents/development/mit_6.837_cg/assignment2", 
+        "file": "vecmath/src/Vector2f.cpp"
+    }, 
+    {
+        "arguments": [
+            "g++", 
+            "-c", 
+            "-g", 
+            "-DSOLN", 
+            "-I", 
+            "./GL", 
+            "-I", 
+            "./vecmath/include", 
+            "-I", 
+            "./", 
+            "-o", 
+            "src/Mesh.o", 
+            "src/Mesh.cpp"
+        ], 
+        "directory": "/home/yucwang/Documents/development/mit_6.837_cg/assignment2", 
+        "file": "src/Mesh.cpp"
+    }, 
+    {
+        "arguments": [
+            "g++", 
+            "-c", 
+            "-g", 
+            "-DSOLN", 
+            "-I", 
+            "./GL", 
+            "-I", 
+            "./vecmath/include", 
+            "-I", 
+            "./", 
+            "-o", 
+            "src/MatrixStack.o", 
+            "src/MatrixStack.cpp"
+        ], 
+        "directory": "/home/yucwang/Documents/development/mit_6.837_cg/assignment2", 
+        "file": "src/MatrixStack.cpp"
+    }, 
+    {
+        "arguments": [
+            "g++", 
+            "-c", 
+            "-g", 
+            "-DSOLN", 
+            "-I", 
+            "./GL", 
+            "-I", 
+            "./vecmath/include", 
+            "-I", 
+            "./", 
+            "-o", 
+            "vecmath/src/Matrix3f.o", 
+            "vecmath/src/Matrix3f.cpp"
+        ], 
+        "directory": "/home/yucwang/Documents/development/mit_6.837_cg/assignment2", 
+        "file": "vecmath/src/Matrix3f.cpp"
+    }, 
+    {
+        "arguments": [
+            "g++", 
+            "-c", 
+            "-g", 
+            "-DSOLN", 
+            "-I", 
+            "./GL", 
+            "-I", 
+            "./vecmath/include", 
+            "-I", 
+            "./", 
+            "-o", 
+            "vecmath/src/Matrix4f.o", 
+            "vecmath/src/Matrix4f.cpp"
+        ], 
+        "directory": "/home/yucwang/Documents/development/mit_6.837_cg/assignment2", 
+        "file": "vecmath/src/Matrix4f.cpp"
+    }, 
+    {
+        "arguments": [
+            "g++", 
+            "-c", 
+            "-g", 
+            "-DSOLN", 
+            "-I", 
+            "./GL", 
+            "-I", 
+            "./vecmath/include", 
+            "-I", 
+            "./", 
+            "-o", 
+            "vecmath/src/Quat4f.o", 
+            "vecmath/src/Quat4f.cpp"
+        ], 
+        "directory": "/home/yucwang/Documents/development/mit_6.837_cg/assignment2", 
+        "file": "vecmath/src/Quat4f.cpp"
+    }, 
+    {
+        "arguments": [
+            "g++", 
+            "-c", 
+            "-g", 
+            "-DSOLN", 
+            "-I", 
+            "./GL", 
+            "-I", 
+            "./vecmath/include", 
+            "-I", 
+            "./", 
+            "-o", 
+            "src/Joint.o", 
+            "src/Joint.cpp"
+        ], 
+        "directory": "/home/yucwang/Documents/development/mit_6.837_cg/assignment2", 
+        "file": "src/Joint.cpp"
+    }
+]
