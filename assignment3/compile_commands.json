@@ -1,0 +1,20 @@
+[
+    {
+        "arguments": [
+            "g++", 
+            "-c", 
+            "-g", 
+            "-Wall", 
+            "-ansi", 
+            "-I", 
+            "vecmath/include", 
+            "-I", 
+            "../GL/", 
+            "-o", 
+            "main.o", 
+            "main.cpp"
+        ], 
+        "directory": "/home/yucwang/Documents/development/mit_6.837_cg/assignment3", 
+        "file": "main.cpp"
+    }
+]
