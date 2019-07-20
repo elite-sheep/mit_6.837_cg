@@ -3,20 +3,20 @@
 #LINKFLAGS = -L /mit/6.837/public/lib -l vecmath
 #LINKFLAGS += -L /mit/glut/lib -lGL -lGLU -lglut -lX11 -lXi
 INCFLAGS  = -I ./GL
-INCFLAGS += -I ./vecmath/include
+INCFLAGS += -I ../vecmath/include
 INCFLAGS += -I ./
 #INCFLAGS += -I ~/vecmath/include
 
 LINKFLAGS  = -lglut -lGL -lGLU
 LINKFLAGS += -lfltk -lfltk_gl
-#LINKFLAGS += -L ~/vecmath/lib -lvecmath
+#LINKFLAGS += -L ../vecmath -lvecmath
 #LINKFLAGS += -lfltk -lfltk_gl
 
 CFLAGS    = -g
 CFLAGS    += -DSOLN
 CC        = g++
 SRCS      =  $(wildcard ./src/*.cpp)
-SRCS      += $(wildcard ./vecmath/src/*.cpp)
+SRCS      += $(wildcard ../vecmath/src/*.cpp)
 OBJS      = $(SRCS:.cpp=.o)
 PROG      = a2
 
