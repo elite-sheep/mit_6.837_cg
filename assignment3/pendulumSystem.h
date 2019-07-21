@@ -20,7 +20,8 @@ private:
   vector<float> m_masses;
 private:
   Vector3f generateGravity(int);
-  Vector3f generateDragForce(const Vector3f&, float, float);
+  Vector3f generateSpringForce(const Vector3f&, float, float);
+  Vector3f generateViscousForce(const Vector3f&, float);
 };
 
 #endif

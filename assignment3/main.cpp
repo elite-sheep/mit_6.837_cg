@@ -1,5 +1,6 @@
 #include <cmath>
 #include <cstdlib>
+#include <cstring>
 #include <ctime>
 #include <iostream>
 #include <vector>
@@ -31,7 +32,24 @@ namespace
     srand( time( NULL ) );
     system = new PendulumSystem(4);
 
-    timeStepper = new ForwardEuler();
+    const char* timeStepperType = "RK4";
+    for (int i = 0; i < argc; ++i) {
+      if (!strcmp("-timestepper", argv[i]) && i - 1 < argc) {
+        timeStepperType = argv[i + 1];
+        break;
+      }
+    }
+
+    if (!strcmp("RK4", timeStepperType)) {
+      timeStepper = new RK4();
+    } else if (!strcmp("ForwardEuler", timeStepperType)) {
+      timeStepper = new ForwardEuler();
+    } else if (!strcmp("Trapzoidal", timeStepperType)) {
+      timeStepper = new Trapzoidal();
+    } else {
+      std::cerr << "Should not reach here.";
+      exit(1);
+    }
   }
 
   // Take a step forward for the particle shower
