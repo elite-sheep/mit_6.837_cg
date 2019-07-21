@@ -25,6 +25,7 @@ public:
 	
 	virtual void draw() = 0;
 	
+  static float generateRandomNumber(float l, float r);
 protected:
 
 	vector<Vector3f> m_vVecState;

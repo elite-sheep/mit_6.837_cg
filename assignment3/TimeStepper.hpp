@@ -15,12 +15,17 @@ public:
 
 class ForwardEuler:public TimeStepper
 {
-  void takeStep(ParticleSystem* particleSystem, float stepSize);
+  void takeStep(ParticleSystem* particleSystem, float stepSize) override;
 };
 
 class Trapzoidal:public TimeStepper
 {
-  void takeStep(ParticleSystem* particleSystem, float stepSize);
+  void takeStep(ParticleSystem* particleSystem, float stepSize) override;
+};
+
+class RK4:public TimeStepper
+{
+  void takeStep(ParticleSystem* particleSystem, float stepSize) override;
 };
 
 /////////////////////////

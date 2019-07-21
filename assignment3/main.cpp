@@ -11,6 +11,7 @@
 ///TODO: include more headers if necessary
 
 #include "TimeStepper.hpp"
+#include "pendulumSystem.h"
 #include "simpleSystem.h"
 
 using namespace std;
@@ -28,9 +29,8 @@ namespace
   {
     // seed the random number generator with the current time
     srand( time( NULL ) );
-    system = new SimpleSystem();
+    system = new PendulumSystem(4);
 
-    // yuchen: Disable RK4 for now for build errors.
     timeStepper = new ForwardEuler();
   }
 

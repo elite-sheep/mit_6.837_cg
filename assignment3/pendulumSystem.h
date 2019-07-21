@@ -16,6 +16,11 @@ public:
 	
 	void draw();
 	
+private:
+  vector<float> m_masses;
+private:
+  Vector3f generateGravity(int);
+  Vector3f generateDragForce(const Vector3f&, float, float);
 };
 
 #endif
