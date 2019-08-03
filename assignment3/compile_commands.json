@@ -1,0 +1,268 @@
+[
+    {
+        "arguments": [
+            "g++", 
+            "-c", 
+            "-g", 
+            "-Wall", 
+            "-ansi", 
+            "-std=c++11", 
+            "-I", 
+            "../vecmath/include", 
+            "-I", 
+            "../GL/", 
+            "-o", 
+            "ClothSystem.o", 
+            "ClothSystem.cpp"
+        ], 
+        "directory": "/home/yucwang/Documents/development/mit_6.837_cg/assignment3", 
+        "file": "ClothSystem.cpp"
+    }, 
+    {
+        "arguments": [
+            "g++", 
+            "-c", 
+            "-g", 
+            "-Wall", 
+            "-ansi", 
+            "-std=c++11", 
+            "-I", 
+            "../vecmath/include", 
+            "-I", 
+            "../GL/", 
+            "-o", 
+            "../vecmath/src/Matrix3f.o", 
+            "../vecmath/src/Matrix3f.cpp"
+        ], 
+        "directory": "/home/yucwang/Documents/development/mit_6.837_cg/assignment3", 
+        "file": "../vecmath/src/Matrix3f.cpp"
+    }, 
+    {
+        "arguments": [
+            "g++", 
+            "-c", 
+            "-g", 
+            "-Wall", 
+            "-ansi", 
+            "-std=c++11", 
+            "-I", 
+            "../vecmath/include", 
+            "-I", 
+            "../GL/", 
+            "-o", 
+            "../vecmath/src/Matrix4f.o", 
+            "../vecmath/src/Matrix4f.cpp"
+        ], 
+        "directory": "/home/yucwang/Documents/development/mit_6.837_cg/assignment3", 
+        "file": "../vecmath/src/Matrix4f.cpp"
+    }, 
+    {
+        "arguments": [
+            "g++", 
+            "-c", 
+            "-g", 
+            "-Wall", 
+            "-ansi", 
+            "-std=c++11", 
+            "-I", 
+            "../vecmath/include", 
+            "-I", 
+            "../GL/", 
+            "-o", 
+            "../vecmath/src/Vector3f.o", 
+            "../vecmath/src/Vector3f.cpp"
+        ], 
+        "directory": "/home/yucwang/Documents/development/mit_6.837_cg/assignment3", 
+        "file": "../vecmath/src/Vector3f.cpp"
+    }, 
+    {
+        "arguments": [
+            "g++", 
+            "-c", 
+            "-g", 
+            "-Wall", 
+            "-ansi", 
+            "-std=c++11", 
+            "-I", 
+            "../vecmath/include", 
+            "-I", 
+            "../GL/", 
+            "-o", 
+            "simpleSystem.o", 
+            "simpleSystem.cpp"
+        ], 
+        "directory": "/home/yucwang/Documents/development/mit_6.837_cg/assignment3", 
+        "file": "simpleSystem.cpp"
+    }, 
+    {
+        "arguments": [
+            "g++", 
+            "-c", 
+            "-g", 
+            "-Wall", 
+            "-ansi", 
+            "-std=c++11", 
+            "-I", 
+            "../vecmath/include", 
+            "-I", 
+            "../GL/", 
+            "-o", 
+            "TimeStepper.o", 
+            "TimeStepper.cpp"
+        ], 
+        "directory": "/home/yucwang/Documents/development/mit_6.837_cg/assignment3", 
+        "file": "TimeStepper.cpp"
+    }, 
+    {
+        "arguments": [
+            "g++", 
+            "-c", 
+            "-g", 
+            "-Wall", 
+            "-ansi", 
+            "-std=c++11", 
+            "-I", 
+            "../vecmath/include", 
+            "-I", 
+            "../GL/", 
+            "-o", 
+            "camera.o", 
+            "camera.cpp"
+        ], 
+        "directory": "/home/yucwang/Documents/development/mit_6.837_cg/assignment3", 
+        "file": "camera.cpp"
+    }, 
+    {
+        "arguments": [
+            "g++", 
+            "-c", 
+            "-g", 
+            "-Wall", 
+            "-ansi", 
+            "-std=c++11", 
+            "-I", 
+            "../vecmath/include", 
+            "-I", 
+            "../GL/", 
+            "-o", 
+            "../vecmath/src/Vector2f.o", 
+            "../vecmath/src/Vector2f.cpp"
+        ], 
+        "directory": "/home/yucwang/Documents/development/mit_6.837_cg/assignment3", 
+        "file": "../vecmath/src/Vector2f.cpp"
+    }, 
+    {
+        "arguments": [
+            "g++", 
+            "-c", 
+            "-g", 
+            "-Wall", 
+            "-ansi", 
+            "-std=c++11", 
+            "-I", 
+            "../vecmath/include", 
+            "-I", 
+            "../GL/", 
+            "-o", 
+            "../vecmath/src/Vector4f.o", 
+            "../vecmath/src/Vector4f.cpp"
+        ], 
+        "directory": "/home/yucwang/Documents/development/mit_6.837_cg/assignment3", 
+        "file": "../vecmath/src/Vector4f.cpp"
+    }, 
+    {
+        "arguments": [
+            "g++", 
+            "-c", 
+            "-g", 
+            "-Wall", 
+            "-ansi", 
+            "-std=c++11", 
+            "-I", 
+            "../vecmath/include", 
+            "-I", 
+            "../GL/", 
+            "-o", 
+            "main.o", 
+            "main.cpp"
+        ], 
+        "directory": "/home/yucwang/Documents/development/mit_6.837_cg/assignment3", 
+        "file": "main.cpp"
+    }, 
+    {
+        "arguments": [
+            "g++", 
+            "-c", 
+            "-g", 
+            "-Wall", 
+            "-ansi", 
+            "-std=c++11", 
+            "-I", 
+            "../vecmath/include", 
+            "-I", 
+            "../GL/", 
+            "-o", 
+            "../vecmath/src/Matrix2f.o", 
+            "../vecmath/src/Matrix2f.cpp"
+        ], 
+        "directory": "/home/yucwang/Documents/development/mit_6.837_cg/assignment3", 
+        "file": "../vecmath/src/Matrix2f.cpp"
+    }, 
+    {
+        "arguments": [
+            "g++", 
+            "-c", 
+            "-g", 
+            "-Wall", 
+            "-ansi", 
+            "-std=c++11", 
+            "-I", 
+            "../vecmath/include", 
+            "-I", 
+            "../GL/", 
+            "-o", 
+            "../vecmath/src/Quat4f.o", 
+            "../vecmath/src/Quat4f.cpp"
+        ], 
+        "directory": "/home/yucwang/Documents/development/mit_6.837_cg/assignment3", 
+        "file": "../vecmath/src/Quat4f.cpp"
+    }, 
+    {
+        "arguments": [
+            "g++", 
+            "-c", 
+            "-g", 
+            "-Wall", 
+            "-ansi", 
+            "-std=c++11", 
+            "-I", 
+            "../vecmath/include", 
+            "-I", 
+            "../GL/", 
+            "-o", 
+            "pendulumSystem.o", 
+            "pendulumSystem.cpp"
+        ], 
+        "directory": "/home/yucwang/Documents/development/mit_6.837_cg/assignment3", 
+        "file": "pendulumSystem.cpp"
+    }, 
+    {
+        "arguments": [
+            "g++", 
+            "-c", 
+            "-g", 
+            "-Wall", 
+            "-ansi", 
+            "-std=c++11", 
+            "-I", 
+            "../vecmath/include", 
+            "-I", 
+            "../GL/", 
+            "-o", 
+            "particleSystem.o", 
+            "particleSystem.cpp"
+        ], 
+        "directory": "/home/yucwang/Documents/development/mit_6.837_cg/assignment3", 
+        "file": "particleSystem.cpp"
+    }
+]
