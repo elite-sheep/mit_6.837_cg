@@ -20,27 +20,23 @@ public:
 
   }
 	
-  Group( int num_objects ){
-
-  }
+  Group( int num_objects );
 
   ~Group(){
-   
+    delete[] data_;
   }
 
-  virtual bool intersect( const Ray& r , Hit& h , float tmin ) {
-		
-   }
+  virtual bool intersect( const Ray& r , Hit& h , float tmin ) override;
 	
-  void addObject( int index , Object3D* obj ){
-
-  }
+  void addObject( int index , Object3D* obj );
 
   int getGroupSize(){ 
-  
+    return numObj_;
   }
 
  private:
+  Object3D** data_;
+  int numObj_;
 
 };
 

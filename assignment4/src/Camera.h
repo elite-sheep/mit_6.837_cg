@@ -16,10 +16,10 @@ public:
 	virtual float getTMin() const = 0 ; 
 	virtual ~Camera(){}
 protected:
-	Vector3f center; 
-	Vector3f direction;
-	Vector3f up;
-	Vector3f horizontal;
+	Vector3f center_; 
+	Vector3f direction_;
+	Vector3f up_;
+	Vector3f horizontal_;
 
 };
 
@@ -28,12 +28,19 @@ protected:
 class PerspectiveCamera: public Camera
 {
 public:
-	PerspectiveCamera(const Vector3f& center, const Vector3f& direction,const Vector3f& up , float angle){
-
-	}
+	PerspectiveCamera(const Vector3f& center, const Vector3f& direction,const Vector3f& up , float angle):
+    center_(center),
+    direction_(direction),
+    up_(up),
+    angle_(angle) {
+      horizontal_ = Vector3f::cross(direction_, up_);
+      horizontal_.normalized();
+    }
 
 	virtual Ray generateRay( const Vector2f& point){
-		
+    float distanceToScreen = 1.0 / (2.0 * tan(angle_ / 2.0f));
+    Vector3f dir = distanceToScreen * direction_ + point[0] * horizontal_ + point[1] * up_;
+    return Ray(center_, dir);
 	}
 
 	virtual float getTMin() const { 
@@ -41,6 +48,7 @@ public:
 	}
 
 private:
+  float angle;
 
 };
 

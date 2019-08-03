@@ -16,19 +16,18 @@ public:
 		//unit ball at the center
 	}
 
-	Sphere( Vector3f center , float radius , Material* material ):Object3D(material){
-
-	}
-	
+	Sphere( Vector3f center , float radius , Material* material );
 
 	~Sphere(){}
 
-	virtual bool intersect( const Ray& r , Hit& h , float tmin){
-
-	}
+	bool intersect( const Ray& r , Hit& h , float tmin) override;
 
 protected:
 	
+  
+private:
+  float radius_;
+  Vector3f center_;
 
 };
 
