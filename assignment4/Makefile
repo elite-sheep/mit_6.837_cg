@@ -3,7 +3,7 @@ SRCS = $(wildcard ./src/*.cpp)
 SRCS += $(wildcard ../vecmath/src/*.cpp)
 OBJS = $(SRCS:.cpp=.o)
 PROG = a4
-CFLAGS = -O2 -Wall -Wextra
+CFLAGS = -g -Wall -Wextra
 INCFLAGS = -I../vecmath/include
 
 all: $(PROG)
@@ -15,4 +15,4 @@ $(PROG): $(OBJS)
 	$(CC) $(CFLAGS) $< -c -o $@ $(INCFLAGS)
 
 clean:
-	rm -f *.bak vecmath/src/*.o *.o core.* $(PROG) 
+	rm -f *.bak src/*.o core.* $(PROG) 

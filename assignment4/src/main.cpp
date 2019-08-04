@@ -5,6 +5,8 @@
 #include <cmath>
 #include <iostream>
 
+#include "ArgsParser.h"
+#include "Renderer.h"
 #include "SceneParser.h"
 #include "Image.h"
 #include "Camera.h"
@@ -27,7 +29,6 @@ int main( int argc, char* argv[] )
     {
       std::cout << "Argument " << argNum << " is: " << argv[argNum] << std::endl;
     }
-	
     
   // First, parse the scene using SceneParser.
   // Then loop over each pixel in the image, shooting a ray
@@ -35,8 +36,17 @@ int main( int argc, char* argv[] )
   // the scene.  Write the color at the intersection to that
   // pixel in your output image.
 
+  ArgsParser argsParser;
+  argsParser.parse(argc, argv);
 
+  Args args = argsParser.getArgs();
+  if (args.inputFilename.empty()) {
+    std::cerr << "main.cpp: fail to get input filename";
+    return 0;
+  }
 
+  Renderer renderer(args);
+  renderer.render();
  
   ///TODO: below demonstrates how to use the provided Image class
   ///Should be removed when you start

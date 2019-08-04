@@ -12,7 +12,7 @@ class Camera
 public:
   Camera(const Vector3f& center, const Vector3f& direction, const Vector3f& up):
     center_(center),
-    direction_(direction),
+    direction_(direction.normalized()),
     up_(up) {}
 
 	//generate rays for each screen-space coordinate
@@ -36,12 +36,11 @@ public:
 	PerspectiveCamera(const Vector3f& center, const Vector3f& direction,const Vector3f& up , float angle):
     Camera(center, direction, up),
     angle_(angle) {
-      horizontal_ = Vector3f::cross(direction_, up_);
-      horizontal_.normalized();
+      horizontal_ = Vector3f::cross(direction_, up_).normalized();
     }
 
 	virtual Ray generateRay( const Vector2f& point){
-    float distanceToScreen = 1.0 / (2.0 * tan(angle_ / 2.0f));
+    float distanceToScreen = 1.0 / tan(angle_ / 2.0f);
     Vector3f dir = distanceToScreen * direction_ + point[0] * horizontal_ + point[1] * up_;
     return Ray(center_, dir);
 	}

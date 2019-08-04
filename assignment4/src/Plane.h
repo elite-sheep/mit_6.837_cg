@@ -11,14 +11,14 @@ class Plane: public Object3D
 {
 public:
 	Plane(){}
-	Plane( const Vector3f& normal , float d , Material* m):Object3D(m){
-	}
+	Plane( const Vector3f& normal , float d , Material* m);
 	~Plane(){}
-	virtual bool intersect( const Ray& r , Hit& h , float tmin){
-		
-	}
+	bool intersect( const Ray& r , Hit& h , float tmin) override;
 
-protected:
+private:
+  Vector3f normal_;
+  float d_;
+
 };
 #endif //PLANE_H
 		

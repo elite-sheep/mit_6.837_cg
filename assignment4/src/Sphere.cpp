@@ -19,7 +19,7 @@ bool Sphere::intersect(const Ray& r, Hit& h, float tmin) {
   if (b*b >= 4*a*c) {
     float t1 = (-b + sqrt(b*b-4*a*c)) / (2.0f * a);
     if (t1 > tmin && t1 < h.getT()) {
-      Vector3f p = r.getOrigin() + t1 * r.getDirection();
+      Vector3f p = r.pointAtParameter(t1);
       Vector3f normal = p - center_;
       normal.normalized();
       h.set(t1, material, normal);
@@ -28,11 +28,13 @@ bool Sphere::intersect(const Ray& r, Hit& h, float tmin) {
 
     float t2 = (-b - sqrt(b*b-4*a*c)) / (2.0f * a);
     if (t2 > tmin && t2 < h.getT()) {
-      Vector3f p = r.getOrigin() + t2 * r.getDirection();
+      Vector3f p = r.pointAtParameter(t2);
       Vector3f normal = p - center_;
       normal.normalized();
       h.set(t2, material, normal);
       have_answer = true;
     }
   }
+
+  return have_answer;
 }
