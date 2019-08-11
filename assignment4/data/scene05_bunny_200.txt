@@ -38,7 +38,7 @@ Group {
 
     MaterialIndex 0
     TriangleMesh {
-        obj_file bunny_200.obj
+        obj_file ./data/bunny_200.obj
     }
 }
 

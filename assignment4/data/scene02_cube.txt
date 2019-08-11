@@ -28,6 +28,6 @@ Group {
     numObjects 1
     MaterialIndex 0
     TriangleMesh {
-        obj_file cube.obj
+        obj_file ./data/cube.obj
     }
 }

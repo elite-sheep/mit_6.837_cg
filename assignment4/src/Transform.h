@@ -10,17 +10,14 @@ class Transform: public Object3D
 {
 public: 
   Transform(){}
- Transform( const Matrix4f& m, Object3D* obj ):o(obj){
-    
-  }
+ Transform( const Matrix4f& m, Object3D* obj );
   ~Transform(){
   }
-  virtual bool intersect( const Ray& r , Hit& h , float tmin){
-    o->intersect( r , h , tmin);
-  }
+  bool intersect( const Ray& r , Hit& h , float tmin) override;
 
  protected:
-  Object3D* o; //un-transformed object	
+  Object3D* o; //un-transformed object
+  Matrix4f transform;
 };
 
 #endif //TRANSFORM_H

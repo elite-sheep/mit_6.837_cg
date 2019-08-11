@@ -14,20 +14,24 @@ using namespace std;
 class Triangle: public Object3D
 {
 public:
-	Triangle();
-        ///@param a b c are three vertex positions of the triangle
-	Triangle( const Vector3f& a, const Vector3f& b, const Vector3f& c, Material* m):Object3D(m){
-          hasTex = false;
-	}
+  Triangle();
+  
+  ///@param a b c are three vertex positions of the triangle
+  Triangle( const Vector3f&, const Vector3f&, const Vector3f&, Material*);
 
-	virtual bool intersect( const Ray& ray,  Hit& hit , float tmin){
-		
-	}
-	bool hasTex;
-	Vector3f normals[3];
-	Vector2f texCoords[3];
+  bool intersect( const Ray& ray,  Hit& hit , float tmin) override;
+
+public:
+  Vector2f texCoords[3];
+  Vector3f normals[3];
+  bool hasTex;
+
 protected:
 
+private:
+  Vector3f a_;
+  Vector3f b_;
+  Vector3f c_;
 };
 
 #endif //TRIANGLE_H

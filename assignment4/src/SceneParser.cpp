@@ -42,7 +42,7 @@ SceneParser::SceneParser(const char* filename) {
     file = fopen(filename,"r");
 
 	if (file == NULL){
-		printf("cannot open scene file\n");
+		printf("cannot open scene file: %s\n", filename);
 		exit(0);
 	}
     parseFile();
