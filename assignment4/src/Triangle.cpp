@@ -40,7 +40,12 @@ bool Triangle::intersect(const Ray &ray, Hit& hit, float tmin) {
   if (t >= tmin && t < hit.getT() && beta + gamma <= 1.0f && beta >= 0.0 && gamma >= 0.0) {
     float alpha = 1 - beta - gamma;
     Vector3f normal = alpha * normals[0] + beta * normals[1] + gamma * normals[2];
+
+    if (hasTex) {
+      hit.setTexCoord(alpha * texCoords[0] + beta * texCoords[1] + gamma * texCoords[2]);
+    }
     hit.set(t, this->material, normal.normalized());
+
     return true;
   }
 

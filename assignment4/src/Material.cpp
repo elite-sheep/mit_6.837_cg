@@ -1,19 +1,31 @@
 /* Copyright 2019 The Microsoft Edge authors */
 
+#include <algorithm>
+#include <cmath>
+
 #include "Material.h"
 
 Vector3f Material::Shade(const Ray& ray,
     const Hit& hit,
     const Vector3f& dirToLight,
     const Vector3f& lightColor) {
-  Vector3f diffuse;
-  float angleLightNormal = Vector3f::dot(dirToLight, hit.getNormal());
+  Vector3f shadeColor = Vector3f::ZERO;
 
-  if (angleLightNormal > 0) {
-    diffuse = angleLightNormal * diffuseColor_ * lightColor;
-  } else {
-    diffuse = Vector3f::ZERO;
+  Vector3f textureColor = diffuseColor_;
+  if (t_.valid()) {
+    textureColor = t_(hit.texCoord[0], hit.texCoord[1]);
   }
 
-  return diffuse;
+  float lightColorShadingIntensity = Vector3f::dot(dirToLight, hit.getNormal().normalized());
+  if (lightColorShadingIntensity > 0) {
+    shadeColor += lightColorShadingIntensity * textureColor * lightColor;
+  }
+
+  Vector3f reflectedDir = ray.getDirection() - 
+    2 * (Vector3f::dot(hit.getNormal(), ray.getDirection())) * hit.getNormal();
+  float specularShadingIntensity = Vector3f::dot(dirToLight, reflectedDir);
+  if (lightColorShadingIntensity > 0) {
+    shadeColor = shadeColor + (pow(specularShadingIntensity, shininess_) * specularColor_ * lightColor;
+  }
+  return shadeColor;
 }

@@ -29,13 +29,13 @@ Materials {
 	  diffuseColor 0.1 0.1 0.1 
 	  specularColor 0.3 0.3 0.3
 	  shininess 25
-	  texture tex/char.bmp
+	  texture data/tex/char.bmp
 	}
   PhongMaterial { 
 	  diffuseColor 0.3 0.3 0.3 
 	  specularColor 0.3 0.3 0.3
 	  shininess 25
-	  texture tex/chicken.bmp
+	  texture data/tex/chicken.bmp
 	}
   PhongMaterial { 
 	  diffuseColor 0.3 0.8 0.3 
@@ -52,7 +52,7 @@ Group {
 		Scale 0.4 0.4 0.4
 		Translate 0 0.7 0
         TriangleMesh {
-            obj_file tex/steve.obj
+            obj_file data/tex/steve.obj
         }
     }
     
@@ -62,7 +62,7 @@ Group {
 		Scale 0.2 0.2 0.2
     Translate -7.7 -1.0 0    
     TriangleMesh {
-            obj_file tex/chicken.obj
+            obj_file data/tex/chicken.obj
         }
     }
     MaterialIndex 2

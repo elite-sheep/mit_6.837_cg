@@ -29,21 +29,21 @@ Materials {
 	  diffuseColor 0.2 0.8 0.2 
 	  specularColor 0.7 0.9 0.7
 	  shininess 20
-	  texture tex/head.bmp
+	  texture data/tex/head.bmp
 	}
 	
 	PhongMaterial { 
 	  diffuseColor 0.2 0.8 0.2
 	  specularColor 0.7 0.9 0.7
 	  shininess 20
-	  texture tex/body.bmp
+	  texture data/tex/body.bmp
 	}
 	
 	PhongMaterial { 
 	  diffuseColor 0.2 0.8 0.2
 	  specularColor 0.7 0.9 0.7
 	  shininess 20
-	  texture tex/feet.bmp
+	  texture data/tex/feet.bmp
 	}
 	
   PhongMaterial { 
@@ -60,7 +60,7 @@ Group {
 		YRotate 30
 		Translate  0.03 -0.0666 0 	
         TriangleMesh {
-            obj_file tex/c2.obj
+            obj_file data/tex/c2.obj
         }
     }
 	
@@ -69,7 +69,7 @@ Group {
 		YRotate 30
 		Translate  0.03 -0.0666 0 	
         TriangleMesh {
-            obj_file tex/c1.obj
+            obj_file data/tex/c1.obj
         }
     }
 	
@@ -78,7 +78,7 @@ Group {
 		YRotate 30
 		Translate  0.03 -0.0666 0 	
         TriangleMesh {
-            obj_file tex/c3.obj
+            obj_file data/tex/c3.obj
         }
     }
     MaterialIndex 3
