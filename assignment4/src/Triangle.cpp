@@ -43,6 +43,7 @@ bool Triangle::intersect(const Ray &ray, Hit& hit, float tmin) {
 
     if (hasTex) {
       hit.setTexCoord(alpha * texCoords[0] + beta * texCoords[1] + gamma * texCoords[2]);
+      std::cout << hit.texCoord[0] << hit.texCoord[1] << std::endl;
     }
     hit.set(t, this->material, normal.normalized());
 

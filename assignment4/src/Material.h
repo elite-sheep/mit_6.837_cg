@@ -31,6 +31,7 @@ public:
   Vector3f Shade( const Ray& ray, const Hit& hit,
                   const Vector3f& dirToLight, const Vector3f& lightColor );
 
+  Texture t_;
   void loadTexture(const char * filename){
     t_.load(filename);
   }
@@ -38,7 +39,6 @@ public:
   Vector3f diffuseColor_;
   Vector3f specularColor_;
   float shininess_;
-  Texture t_;
 };
 
 

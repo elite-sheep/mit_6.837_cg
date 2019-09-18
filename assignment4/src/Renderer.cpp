@@ -37,9 +37,17 @@ void Renderer::render() {
         float nh = 2 * (j / (args_.height - 1.0f)) - 1.0f;
         Ray ray = camera->generateRay(Vector2f(nw, nh));
         Hit h = Hit();
-        Vector3f shadedColor = Vector3f::ZERO;
+        Vector3f shadedColor;
         if (group->intersect(ray, h, camera->getTMin())) {
           Material* material = h.getMaterial();
+
+          if (h.hasTex && material->t_.valid()) {
+            Texture texture = h.getMaterial()->t_;
+            shadedColor = texture(h.texCoord[0], h.texCoord[1]) * ambientLight;
+          } else {
+            shadedColor = material->getDiffuseColor() * ambientLight;
+          }
+
           for (int k = 0; k < numLight; ++k) {
             Vector3f dirLight;
             Vector3f colorLight;
@@ -49,7 +57,6 @@ void Renderer::render() {
             shadedColor += material->Shade(ray, h, dirLight, colorLight);
           }
 
-          shadedColor += material->getDiffuseColor() * ambientLight;
           image.SetPixel(i, j, shadedColor);
         }
       }
