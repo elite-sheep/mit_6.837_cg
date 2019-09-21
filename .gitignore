@@ -1,1 +1,4 @@
 *.o
+./assignment4/a4soln
+./assignment3/a3soln
+compile_commands.json
