@@ -40,13 +40,7 @@ void Renderer::render() {
         Vector3f shadedColor;
         if (group->intersect(ray, h, camera->getTMin())) {
           Material* material = h.getMaterial();
-
-          if (h.hasTex && material->t_.valid()) {
-            Texture texture = h.getMaterial()->t_;
-            shadedColor = texture(h.texCoord[0], h.texCoord[1]) * ambientLight;
-          } else {
-            shadedColor = material->getDiffuseColor() * ambientLight;
-          }
+          shadedColor = material->getDiffuseColor() * ambientLight;
 
           for (int k = 0; k < numLight; ++k) {
             Vector3f dirLight;

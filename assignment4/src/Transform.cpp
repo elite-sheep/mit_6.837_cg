@@ -14,6 +14,17 @@ Transform::Transform(const Matrix4f& m, Object3D* obj) :
   transform(m) {}
 
 bool Transform::intersect(const Ray &r, Hit &h, float tmin) {
+Vector3f Ro = r.getOrigin();
+        Vector3f Rd = r.getDirection();
+        Matrix4f m_inv = this->transform.inverse();
+        Ray r_trans = Ray((m_inv * Vector4f(Ro, 1.0)).xyz(), (m_inv * Vector4f(Rd, 0.0)).xyz());
+        if (o->intersect(r_trans, h , tmin)) {
+            Vector3f normal = (m_inv.transposed() * Vector4f(h.getNormal(), 0.0)).xyz().normalized();
+            h.set(h.getT(), h.getMaterial(), normal);
+            return true;
+        }
+        return false;
+/*
   Matrix4f transformInv = transform.inverse();
 
   Vector3f newRayOrigin = (transformInv * Vector4f(r.getOrigin(), 1.0f)).xyz();
@@ -28,4 +39,5 @@ bool Transform::intersect(const Ray &r, Hit &h, float tmin) {
   }
 
   return false;
+*/
 }

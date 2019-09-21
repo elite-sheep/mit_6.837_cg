@@ -13,7 +13,7 @@ public:
   Camera(const Vector3f& center, const Vector3f& direction, const Vector3f& up):
     center_(center),
     direction_(direction.normalized()),
-    up_(up) {}
+    up_(up.normalized()) {}
 
 	//generate rays for each screen-space coordinate
 	virtual Ray generateRay( const Vector2f& point ) = 0 ; 
@@ -41,8 +41,8 @@ public:
 
 	virtual Ray generateRay( const Vector2f& point){
     float distanceToScreen = 1.0 / tan(angle_ / 2.0f);
-    Vector3f dir = distanceToScreen * direction_ + point[0] * horizontal_ + point[1] * up_;
-    return Ray(center_, dir);
+    Vector3f dir = distanceToScreen * direction_ + point.x() * horizontal_ + point.y() * up_;
+    return Ray(center_, dir.normalized());
 	}
 
 	virtual float getTMin() const { 
