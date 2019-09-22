@@ -10,6 +10,8 @@ struct Args {
   std::string outputFilename;
   int width;
   int height;
+  bool haveShadow;
+  int maxBounces;
 };
 
 class ArgsParser {

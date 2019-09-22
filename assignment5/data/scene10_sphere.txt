@@ -49,7 +49,7 @@ Materials {
 Background {
     color 0.2 0.1 0.6
     ambientLight 0.2 0.2 0.2
-    cubeMap tex/church
+    cubeMap data/tex/church
 }
 
 Group {
@@ -72,7 +72,7 @@ Group {
     Translate 1 0.5 -3.5
     Scale 0.8 0.8 0.8
     TriangleMesh {
-	obj_file cube.obj
+	obj_file data/cube.obj
     }
     }
     MaterialIndex 2

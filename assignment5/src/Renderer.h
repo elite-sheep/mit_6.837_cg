@@ -4,13 +4,17 @@
 #define RENDERER_H
 
 #include "ArgsParser.h"
-
-class SceneParser;
+#include "SceneParser.h"
 
 class Renderer {
   public:
     Renderer(Args args);
     void render();
+    ~Renderer() {
+      if (sceneParser_ != nullptr) {
+        delete sceneParser_;
+      }
+    }
 
   private:
     Args args_;

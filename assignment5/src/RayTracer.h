@@ -4,6 +4,7 @@
 #include <cassert>
 #include <vector>
 #include "SceneParser.h"
+#include "ArgsParser.h"
 #include "Ray.h"
 #include "Hit.h"
 #include "Group.h"
@@ -20,15 +21,15 @@ public:
       assert( false );
   }
 
-  RayTracer( SceneParser* scene, int max_bounces //more arguments as you need...
-  );
+  RayTracer(SceneParser*, Args);
   ~RayTracer();
   
   Vector3f traceRay( Ray& ray, float tmin, int bounces, 
                      float refr_index, Hit& hit ) const;
 private:
   Group* g;
-  SceneParser* m_scene;
+  SceneParser* sceneParser_;
+  Args args_;
 
   int m_maxBounces;
 

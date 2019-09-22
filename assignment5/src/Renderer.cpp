@@ -10,8 +10,11 @@
 #include "Image.h"
 #include "Light.h"
 #include "Ray.h"
+#include "RayTracer.h"
 #include "SceneParser.h"
 #include <vecmath.h>
+
+const float EPS = 1e-4;
 
 Renderer::Renderer(Args args):
   args_(args) {
@@ -20,42 +23,23 @@ Renderer::Renderer(Args args):
   }
 
 void Renderer::render() {
-/*  Image image(args_.width, args_.height);
-
-  Vector3f color = sceneParser_->getBackgroundColor();
-
-  image.SetAllPixels(color);
+  Image image(args_.width, args_.height);
 
   Group* group = sceneParser_->getGroup();
   Camera* camera = sceneParser_->getCamera();
-  Vector3f ambientLight = sceneParser_->getAmbientLight();
-  int numLight = sceneParser_->getNumLights();
   if (group != nullptr) {
+    RayTracer tracer(this->sceneParser_, args_);
     for (int i = 0; i < args_.width; ++i) {
       float nw = 2 * (i / (args_.width - 1.0f)) - 1.0f;
       for (int j = 0; j < args_.height; ++j) {
         float nh = 2 * (j / (args_.height - 1.0f)) - 1.0f;
         Ray ray = camera->generateRay(Vector2f(nw, nh));
-        Hit h = Hit();
-        Vector3f shadedColor;
-        if (group->intersect(ray, h, camera->getTMin())) {
-          Material* material = h.getMaterial();
-          shadedColor = material->getDiffuseColor() * ambientLight;
-
-          for (int k = 0; k < numLight; ++k) {
-            Vector3f dirLight;
-            Vector3f colorLight;
-            float disToLight;
-            Light* l = sceneParser_->getLight(k);
-            l->getIllumination(ray.pointAtParameter(h.getT()), dirLight, colorLight, disToLight);
-            shadedColor += material->Shade(ray, h, dirLight, colorLight);
-          }
-
-          image.SetPixel(i, j, shadedColor);
-        }
+        Hit hit = Hit();
+        Vector3f color = tracer.traceRay(ray, camera->getTMin() + EPS, 0, 1.0, hit);
+        image.SetPixel(i, j, color);
       }
     }
   }
 
-  image.SaveImage(args_.outputFilename.c_str()); */
+  image.SaveImage(args_.outputFilename.c_str()); 
 }
