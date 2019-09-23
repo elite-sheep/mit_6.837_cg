@@ -13,23 +13,18 @@
 //These function definitions are mere suggestions. Change them as you like.
 Vector3f mirrorDirection( const Vector3f& normal, const Vector3f& incoming)
 {
-  Vector3f incoming_norm = incoming.normalized();
-  Vector3f normal_norm = normal.normalized();
-
-  return incoming_norm - 2 * Vector3f::dot(incoming_norm, normal_norm) * normal_norm;
+  return (incoming - 2 * Vector3f::dot(incoming, normal) * normal).normalized();
 }
 
 bool transmittedDirection( const Vector3f& normal, const Vector3f& incoming, 
         float index_n, float index_nt, 
         Vector3f& transmitted)
 {
-  Vector3f normal_norm = normal.normalized();
-  Vector3f incoming_norm = incoming.normalized();
-  float dn = Vector3f::dot(incoming_norm, normal_norm);
+  float dn = Vector3f::dot(incoming, normal);
 
-  if (pow(index_n, 2.0f) * (1 - pow(dn, 2.0f))/pow(index_nt, 2.0f) <= 1.0f) {
-    transmitted = index_n / index_nt * (incoming_norm - normal_norm * dn) - 
-      sqrt(1.0f - pow(index_n, 2.0f) * (1 - pow(dn, 2.0f))/(pow(index_nt, 2.0f))) * normal_norm;
+  if (pow(index_n, 2.0f) * (1 - pow(dn, 2.0f))/pow(index_nt, 2.0f) < 1.0f) {
+    transmitted = index_n / index_nt * (incoming - normal * dn) - 
+      sqrt(1.0f - pow(index_n, 2.0f) * (1 - pow(dn, 2.0f))/(pow(index_nt, 2.0f))) * normal;
     return true;
   }
 
@@ -74,7 +69,7 @@ Vector3f RayTracer::traceRay( Ray& ray, float tmin, int bounces,
         }
       }
       if (lightHaveEffect) {
-         color += material->Shade(ray, hit, dirLight, colorLight);
+         color += (material->Shade(ray, hit, dirLight, colorLight) * material->getDiffuseColor());
       }
     }
 
@@ -82,7 +77,7 @@ Vector3f RayTracer::traceRay( Ray& ray, float tmin, int bounces,
     Vector3f reflectedRayDir = mirrorDirection(hit.getNormal(), ray.getDirection());
     Vector3f hitPoint = ray.pointAtParameter(hit.getT());
     Ray reflectRay(hitPoint, reflectedRayDir);
-    Vector3f reflectionColor = traceRay(reflectRay, tmin, bounces + 1, material->getRefractionIndex(), hit);
+    Vector3f reflectionColor = traceRay(reflectRay, tmin + EPSILON, bounces + 1, material->getRefractionIndex(), hit) * material->getSpecularColor();
 
     // Refraction
     Vector3f transmittedRayDir;
@@ -92,14 +87,14 @@ Vector3f RayTracer::traceRay( Ray& ray, float tmin, int bounces,
     Vector3f n = hit.getNormal().normalized();
     float nt = material->getRefractionIndex();
     if (nt > 0) {
-      if (Vector3f::dot(hit.getNormal(), ray.getDirection()) > 0) {
+      if (Vector3f::dot(hit.getNormal(), ray.getDirection()) >=0) {
         nt = 1.0;
         n = -n;
       }
 
       if (transmittedDirection(n, ray.getDirection(), refr_index, nt, transmittedRayDir)) {
         Ray refractionRay(hitPoint, transmittedRayDir);
-        refractionColor = traceRay(refractionRay, tmin, bounces + 1, material->getRefractionIndex(), hit);
+        refractionColor = traceRay(refractionRay, tmin + EPSILON, bounces + 1, material->getRefractionIndex(), hit) * material->getSpecularColor();
         haveRefraction = true;
       }
 
@@ -113,10 +108,10 @@ Vector3f RayTracer::traceRay( Ray& ray, float tmin, int bounces,
           c = abs(Vector3f::dot(transmittedRayDir.normalized(), hit.getNormal().normalized()));
         }
         r = r0 + (1 - r0) * pow(1 - c, 5.0f);
-        color += (r * reflectionColor * material->getSpecularColor());
-        color += ((1 - r) * refractionColor * material->getSpecularColor());
+        color += r * reflectionColor;
+        color += (1 - r) * refractionColor;
       } else {
-        color += reflectionColor * material->getSpecularColor();
+        color += reflectionColor;
       }
 
     } else {

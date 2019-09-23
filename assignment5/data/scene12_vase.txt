@@ -22,7 +22,7 @@ Lights {
 Background {
     color 0.4 0.2 0.8
     ambientLight 0.4 0.4 0.4
-	cubeMap tex/church
+	cubeMap data/tex/church
 }
 
 Materials {
@@ -50,7 +50,7 @@ Group {
 
     MaterialIndex 1
     TriangleMesh {
-        obj_file vase.obj
+      obj_file data/vase.obj
     }
 
     MaterialIndex 0

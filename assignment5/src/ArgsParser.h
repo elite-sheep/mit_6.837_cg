@@ -11,6 +11,7 @@ struct Args {
   int width;
   int height;
   bool haveShadow;
+  bool jittered;
   int maxBounces;
 };
 

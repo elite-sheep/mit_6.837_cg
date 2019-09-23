@@ -12,6 +12,7 @@ ArgsParser::ArgsParser() {
   args_.height = 100;
   args_.haveShadow = false;
   args_.maxBounces = 0;
+  args_.jittered = false;
 }
 
 void ArgsParser::parse(int argc, char* argv[]) {
@@ -39,6 +40,8 @@ void ArgsParser::parse(int argc, char* argv[]) {
       if (i < argc) {
         args_.maxBounces = std::stoi(argv[i]);
       }
+    } else if (!strcmp(argv[i], "-jittered")) {
+      args_.jittered = true;
     } else {
       std::cerr << "ArgsParser: Unable to parse current arg: " << argv[i] << std::endl;
     }

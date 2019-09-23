@@ -48,7 +48,7 @@ Group {
     Transform {
         XRotate -90
         TriangleMesh {
-            obj_file diamond.obj
+            obj_file data/diamond.obj
         }
     }
     MaterialIndex 1

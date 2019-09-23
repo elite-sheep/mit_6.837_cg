@@ -21,7 +21,7 @@ Lights {
 Background {
     color 0 0 0
     ambientLight 0.1 0.1 0.1 
-    cubeMap tex/church2
+    cubeMap data/tex/church2
 }
 
 Materials {
@@ -64,7 +64,7 @@ Group {
 	YRotate  45 
         Translate  0 1 0 
         TriangleMesh {
-       	    obj_file cube.obj
+       	    obj_file data/cube.obj
 	}
     }
 
@@ -74,7 +74,7 @@ Group {
 	Scale  1.6 0.3 0.1 
         Translate  0 1 0 
         TriangleMesh {
-       	    obj_file cube.obj
+       	    obj_file data/cube.obj
 	}
     }
 
@@ -85,7 +85,7 @@ Group {
 	YRotate  45 
         Translate  0 1 0 
         TriangleMesh {
-       	    obj_file cube.obj
+       	    obj_file data/cube.obj
 	}
     }
 
