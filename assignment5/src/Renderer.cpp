@@ -3,6 +3,8 @@
 #include "Renderer.h"
 
 #include <iostream>
+#include <cstdlib>
+#include <ctime>
 
 #include "Camera.h"
 #include "Group.h"
@@ -24,6 +26,9 @@ Renderer::Renderer(Args args):
   }
 
 void Renderer::render() {
+
+  srand(time(nullptr));
+
   Image image(args_.width, args_.height);
 
   Group* group = sceneParser_->getGroup();
@@ -38,12 +43,16 @@ void Renderer::render() {
           color = Vector3f::ZERO;
           for (int k = -1; k <= 1; ++k) {
             for (int l = -1; l <= 1; ++l) {
-              float nw = 2 * ((i + k*0.5) / (args_.width - 1.0f)) - 1.0f;
-              float nh = 2 * ((j + l*0.5) / (args_.height - 1.0f)) - 1.0f;
+
+              float rw = rand() / RAND_MAX - 0.5f;
+              float rh = rand() / RAND_MAX - 0.5f;
+
+              float nw = 2 * ((i + rw) / (args_.width)) - 1.0f;
+              float nh = 2 * ((j + rh) / (args_.height)) - 1.0f;
               
               Ray ray = camera->generateRay(Vector2f(nw, nh));
               Hit hit = Hit();
-              Vector3f upsampleColor = tracer.traceRay(ray, camera->getTMin() + EPS, 0, 1.0, hit);
+              Vector3f upsampleColor = tracer.traceRay(ray, camera->getTMin(), 0, 1.0, hit);
               upsampleImage.SetPixel(3 * i + k + 1, 3 * j + l + 1, upsampleColor);
             }
           }
