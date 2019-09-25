@@ -52,6 +52,9 @@ Vector3f RayTracer::traceRay( Ray& ray, float tmin, int bounces,
     Material* material = hit.getMaterial();
     Vector3f color = material->getDiffuseColor() * ambientLight;
 
+    Vector3f N = hit.getNormal().normalized();
+    Vector3f d = ray.getDirection().normalized();
+
     // Shadow
     for (int k = 0; k < numLight; ++k) {
       Vector3f dirLight;
@@ -62,39 +65,41 @@ Vector3f RayTracer::traceRay( Ray& ray, float tmin, int bounces,
       l->getIllumination(ray.pointAtParameter(hit.getT()), dirLight, colorLight, disToLight);
       if (args_.haveShadow) {
         Vector3f hitPoint = ray.pointAtParameter(hit.getT());
-        Ray shadowRay(hitPoint, dirLight.normalized());
-        Hit hit2 = Hit();
+        Ray shadowRay(hitPoint, dirLight);
+        Hit hit2 = Hit(disToLight, nullptr, NULL);
         if (g->intersect(shadowRay, hit2, tmin + EPSILON)) {
           lightHaveEffect = false;
         }
       }
       if (lightHaveEffect) {
-         color += (material->Shade(ray, hit, dirLight, colorLight) * material->getDiffuseColor());
+         color += (material->Shade(ray, hit, dirLight, colorLight));
       }
     }
 
     // Reflection
-    Vector3f reflectedRayDir = mirrorDirection(hit.getNormal(), ray.getDirection());
+    Vector3f reflectedRayDir = mirrorDirection(N, d);
     Vector3f hitPoint = ray.pointAtParameter(hit.getT());
     Ray reflectRay(hitPoint, reflectedRayDir);
-    Vector3f reflectionColor = traceRay(reflectRay, tmin + EPSILON, bounces + 1, material->getRefractionIndex(), hit) * material->getSpecularColor();
+    Hit reflectHit = Hit();
+    Vector3f reflectionColor = traceRay(reflectRay, tmin + EPSILON, bounces + 1, material->getRefractionIndex(), reflectHit) * material->getSpecularColor();
 
     // Refraction
     Vector3f transmittedRayDir;
     Vector3f refractionColor = Vector3f::ZERO;
     bool haveRefraction = false;
 
-    Vector3f n = hit.getNormal().normalized();
+    Vector3f n = N;
     float nt = material->getRefractionIndex();
     if (nt > 0) {
-      if (Vector3f::dot(hit.getNormal(), ray.getDirection()) >=0) {
+      if (Vector3f::dot(n, d) >=0) {
         nt = 1.0;
         n = -n;
       }
 
-      if (transmittedDirection(n, ray.getDirection(), refr_index, nt, transmittedRayDir)) {
+      Hit refractHit = Hit();
+      if (transmittedDirection(n, d, refr_index, nt, transmittedRayDir)) {
         Ray refractionRay(hitPoint, transmittedRayDir);
-        refractionColor = traceRay(refractionRay, tmin + EPSILON, bounces + 1, material->getRefractionIndex(), hit) * material->getSpecularColor();
+        refractionColor = traceRay(refractionRay, tmin + EPSILON, bounces + 1, material->getRefractionIndex(), refractHit) * material->getSpecularColor();
         haveRefraction = true;
       }
 
@@ -103,10 +108,11 @@ Vector3f RayTracer::traceRay( Ray& ray, float tmin, int bounces,
       float r = 1.0f;
       if (haveRefraction) {
         if (nt >= refr_index) {
-          c = abs(Vector3f::dot(hit.getNormal().normalized(), ray.getDirection().normalized()));
+          c = abs(Vector3f::dot(n, d));
         } else {
-          c = abs(Vector3f::dot(transmittedRayDir.normalized(), hit.getNormal().normalized()));
+          c = abs(Vector3f::dot(transmittedRayDir, n));
         }
+        std::cout << c << std::endl;
         r = r0 + (1 - r0) * pow(1 - c, 5.0f);
         color += r * reflectionColor;
         color += (1 - r) * refractionColor;

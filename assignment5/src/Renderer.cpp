@@ -40,7 +40,6 @@ void Renderer::render() {
       for (int j = 0; j < args_.height; ++j) {
         Vector3f color;
         if (args_.jittered) {
-          color = Vector3f::ZERO;
           for (int k = -1; k <= 1; ++k) {
             for (int l = -1; l <= 1; ++l) {
 
@@ -61,7 +60,7 @@ void Renderer::render() {
           float nh = 2 * (j / (args_.height - 1.0f)) - 1.0f;
           Ray ray = camera->generateRay(Vector2f(nw, nh));
           Hit hit = Hit();
-          Vector3f color = tracer.traceRay(ray, camera->getTMin() + EPS, 0, 1.0, hit);
+          Vector3f color = tracer.traceRay(ray, camera->getTMin(), 0, 1.0, hit);
           image.SetPixel(i, j, color);
         }
       }
